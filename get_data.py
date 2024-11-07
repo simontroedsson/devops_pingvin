@@ -23,6 +23,4 @@ for hour in owmData["hourly"]:
     description = hour["weather"][0]["main"]
     windspeed = hour["wind_speed"]
 
-    perHour.append([formattedDate, formattedTime, round(temperature), description, round(windspeed, 1)])
-for i in perHour:
-    print(i)
+    perHour.append({"Date": formattedDate, "Time": formattedTime, "Temperature": round(temperature), "Weather": description, "Windspeed m/s": round(windspeed, 1)})
