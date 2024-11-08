@@ -5,8 +5,7 @@ import os
 latitude = 59.3293
 longitude = 18.0686
 units = "metric"
-API_KEY = os.getenv('')
-API_KEY = "29612899e6d6265a3cacae00393aa263"
+API_KEY = os.getenv('API_KEY')
 
 
 def getHourlyWeatherData(latitude, longitude, API_KEY, units):
@@ -32,4 +31,3 @@ def getHourlyWeatherData(latitude, longitude, API_KEY, units):
         
         
 perHourData = getHourlyWeatherData(latitude, longitude, API_KEY, units)
-print(perHourData)
