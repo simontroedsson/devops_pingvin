@@ -3,10 +3,12 @@ import datetime
 import os
 from dotenv import load_dotenv
 
+load_dotenv()
 latitude = 59.3293
 longitude = 18.0686
 units = "metric"
 API_KEY = os.getenv('API_KEY')
+
 
 def getHourlyWeatherData(latitude, longitude, API_KEY, units):
     response = requests.get(f"http://api.openweathermap.org/data/3.0/onecall?lat={latitude}&lon={longitude}&appid={API_KEY}&units={units}")
