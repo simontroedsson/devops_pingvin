@@ -30,6 +30,3 @@ def getHourlyWeatherData(latitude, longitude, API_KEY, units):
             perHour = perHour[1:]
             break
     return perHour
-        
-        
-perHourData = getHourlyWeatherData(latitude, longitude, API_KEY, units)
