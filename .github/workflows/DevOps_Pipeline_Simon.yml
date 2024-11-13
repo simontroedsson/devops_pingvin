@@ -28,7 +28,7 @@ env:
 
 jobs:
   test:
-    if: ${{ github.event.inputs.run_test_job || (github.event.inputs.run_test_job == false && github.event.inputs.run_build_deploy_image_job == false) }}
+    if: ${{ github.event.inputs.run_test_job == 'true' || (github.event.inputs.run_test_job == 'false' && github.event.inputs.run_build_deploy_image_job == 'false') }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -44,9 +44,12 @@ jobs:
       run: |
         pytest
       continue-on-error: true
-      if: ${{inputs.run_test_job == false}}
-    - name: test
-      run: echo test
+      if: failure() && ${{inputs.run_test_job == 'true'}}
+    - name: Genereate logg-error artefact
+      uses: actions/upload-artifact@v4
+        with:
+        name: Upload error log
+        path: error_log.txt
   
   build_deploy_image:
     runs-on: ubuntu-latest
