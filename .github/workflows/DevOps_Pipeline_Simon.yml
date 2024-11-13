@@ -6,9 +6,21 @@ name: DevOps pipeline
 on:
   workflow_dispatch:
     inputs:
-      name:
-        type: boolean
-        description: test
+      environment:
+        description: 'Environment to deploy to (e.g., staging, production)'
+        required: true
+        default: 'staging'
+      version:
+        description: 'Application version to deploy'
+        required: false
+      debug_mode:
+        description: 'Enable debug mode'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
 
 permissions:
   contents: read
