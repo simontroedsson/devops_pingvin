@@ -44,7 +44,7 @@ jobs:
       run: |
         pytest
       continue-on-error: true
-      if: ${{inputs.run_test_job == true}}
+      if: ${{inputs.run_test_job == false}}
     - name: test
       run: echo test
   
