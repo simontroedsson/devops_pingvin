@@ -29,7 +29,7 @@ jobs:
   test:
     
     runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.run_test_job == 'true' }}
+    if: ${{ github.event.inputs.Run_test_job == 'true' }}
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python 3.9
