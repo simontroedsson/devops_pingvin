@@ -5,6 +5,10 @@ name: DevOps pipeline
 
 on:
   workflow_dispatch:
+    inputs:
+      name:
+        type: boolean
+        description: test
 
 permissions:
   contents: read
