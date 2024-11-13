@@ -43,6 +43,8 @@ jobs:
       run: docker login -u $docker_username -p $docker_password
     - name: Build the Docker image
       run: docker build -t simontroedsson/demo:1.1 .
+    - name: Push image to dockerhub
+      run: docker push simontroedsson/demo:1.1
 
       
   deploy_image:
@@ -50,6 +52,4 @@ jobs:
     needs: build_image
     steps:
     - uses: actions/checkout@v4
-    - name: Push image to dockerhub
-      run: docker push simontroedsson/demo:1.1
     
