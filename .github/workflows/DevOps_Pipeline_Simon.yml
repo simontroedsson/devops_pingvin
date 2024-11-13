@@ -10,10 +10,12 @@ on:
         description: 'Run_test_job'
         required: true
         type: boolean
+        default: false
       version:
         description: 'Run_build_deploy_image_job'
         required: True
         type: boolean
+        default: false
 
 permissions:
   contents: read
