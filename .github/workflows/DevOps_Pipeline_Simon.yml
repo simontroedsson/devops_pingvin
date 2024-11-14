@@ -41,7 +41,7 @@ jobs:
     - name: Test with pytest
       run: |
        pytest > error_log.txt 
-       echo test
+       cat error_log.txt
       continue-on-error: true
      
       if: failure() && ${{inputs.run_test_job == 'true'}}
