@@ -1,0 +1,44 @@
+name: Docker Image CI
+
+env:
+  DOCKER_USERNAME: ${{ secrets.DOCKER_JASMIN_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_JASMIN_PASSWORD }}
+  IMAGE_NAME: "${{ secrets.DOCKER_JASMIN_USERNAME }}/OWMapp:latest"
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+  
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: Set environment variables
+        run: echo "API_KEY=${{ secrets.API_KEY }}" >> $GITHUB_ENV
+  
+      - name: Run tests
+        run: python -m pytest
+        
+      - name: Log in to Docker Hub
+        run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+      - name: Create dockerfile
+        run: |
+          echo -e "FROM python:3.9\nCOPY . /app/\nWORKDIR /app\nRUN pip install -r requirements.txt\nCMD ['python', 'app.py']" > Dockerfile
+  
+      - name: Build the Docker image
+        run: docker build -t "$IMAGE_NAME" .
+  
+      - name: Push the Docker image
+        run: docker push "$IMAGE_NAME"
