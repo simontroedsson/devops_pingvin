@@ -40,12 +40,8 @@ jobs:
    
     - name: Test with pytest
       run: |
-       pytest >  error_log.txt 2>&1
-          if [ $? -ne 0 ]; then
-            echo "Tests failed. See pytest_output.txt for details."
-            cat  error_log.txt
-            exit 1
-          fi
+       pytest > error_log.txt 
+       echo test
       continue-on-error: true
      
       if: failure() && ${{inputs.run_test_job == 'true'}}
