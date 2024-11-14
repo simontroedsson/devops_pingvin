@@ -62,7 +62,8 @@ jobs:
       run: docker login -u $docker_username -p $docker_password
     
     - name: Build the Docker image
-      run: docker build -t simontroedsson/demo:1.1 .
+      run: docker build --build-arg API_KEY=$API_KEY -t $docker_username/demo:1.1 .
+    
     
     - name: Push image to dockerhub
       run: docker push simontroedsson/demo:1.1
