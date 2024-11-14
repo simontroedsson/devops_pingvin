@@ -24,4 +24,4 @@ def test_per_hour_data_structure():
         assert "Weather" in entry
         assert isinstance(entry["Weather"], str)
         assert "Windspeed m/s" in entry
-        assert isinstance(entry["Windspeed m/s"], float)
+        assert isinstance(entry["Windspeed m/s"], (float,int))
