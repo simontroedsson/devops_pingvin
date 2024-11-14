@@ -6,13 +6,13 @@ name: DevOps pipeline
 on:
   workflow_dispatch:
     inputs:
-      run_test_job:
-        description: 'Run test job'
+      generate_logerror:
+        description: 'Generate logfile on test-failure'
         required: true
         type: boolean
         default: false
-      run_build_deploy_image_job:
-        description: 'Run build and deploy image job'
+      run_test_job:
+        description: 'Run only the test job'
         required: True
         type: boolean
         default: false
@@ -28,7 +28,6 @@ env:
 
 jobs:
   test:
-    if: ${{ github.event.inputs.run_test_job == 'true' || (github.event.inputs.run_test_job == 'false' && github.event.inputs.run_build_deploy_image_job == 'false') }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -42,19 +41,22 @@ jobs:
         pip install -r requirements.txt
     - name: Test with pytest
       run: |
-        pytest > error_log.txt
+        pytest 
       continue-on-error: true
       if: failure() && ${{inputs.run_test_job == 'true'}}
-    - name: Genereate logg-error artefact
+    - name: save error text as a file
+      run: pytest > error_log.txt
+      
+    - name: Genereate log-error artefact
       uses: actions/upload-artifact@v4
       with:
         name: Upload error log
         path: error_log.txt
     
-  build_deploy_image:
+  build_and_deploy_image:
+    if: ${{ github.event.inputs.run_test_job == 'false' }}
     runs-on: ubuntu-latest
     needs: test
-    if: ${{ github.event.inputs.run_build_deploy_image_job || (github.event.inputs.run_test_job == false && github.event.inputs.run_build_deploy_image_job == false) }}
     steps:
     - uses: actions/checkout@v4
     - name: Log in to Docker Hub
