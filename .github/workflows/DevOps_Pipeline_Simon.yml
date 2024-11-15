@@ -1,12 +1,11 @@
 name: DevOps pipeline
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
   workflow_dispatch:
     inputs:
+      version:
+        description: 'Enter version number'
+        type: string 
       generate_logerror:
         description: 'Generate logfile on test-failure'
         required: true
@@ -25,7 +24,7 @@ env:
   docker_username: ${{secrets.DOCKER_simon_USERNAME}}
   docker_password: ${{secrets.DOCKER_simon_PASSWORD}}
   API_KEY: ${{secrets.API_KEY}}
-  
+  version_number: ${{ github.event.inputs.version }}
 
 jobs:
   test:
@@ -54,7 +53,7 @@ jobs:
       with:
         name: Upload error log
         path: error_log.txt
-  #w  
+    
   build_and_deploy_image:
     if: ${{ github.event.inputs.run_test_job == 'false' }}
     runs-on: ubuntu-latest
@@ -67,6 +66,9 @@ jobs:
       
     - name: Build the Docker image
       run: docker build --build-arg API_KEY=$API_KEY -t $docker_username/weather_app:latest --file Dockerfile .
+
+    - name: tag docker image
+      run: docker tag weather_app" $docker_username/weather_app:$version_number"
       
     - name: Push image to dockerhub
       run: docker push $docker_username/weather_app:latest
