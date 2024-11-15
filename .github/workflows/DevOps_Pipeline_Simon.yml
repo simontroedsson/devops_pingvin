@@ -68,7 +68,7 @@ jobs:
       run: docker build --build-arg API_KEY=$API_KEY -t $docker_username/weather_app:latest --file Dockerfile .
 
     - name: tag docker image
-      run: docker tag weather_app" $docker_username/weather_app:$version_number"
+      run: docker tag $docker_username/weather_app:latest "$docker_username/weather_app:$version_number"
       
     - name: Push image to dockerhub
       run: docker push $docker_username/weather_app:latest
