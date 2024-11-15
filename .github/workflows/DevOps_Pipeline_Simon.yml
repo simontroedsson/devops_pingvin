@@ -44,11 +44,9 @@ jobs:
        python -m pytest > error_log.txt 
        cat error_log.txt
        exit 1
-      continue-on-error: true
      
-      
     - name: Genereate log-error artefact
-      if: ${{ steps.test.outcome == 'failure' && github.event.inputs.generate_logerror == 'true' }}
+      if: ${{ always() && (steps.test.outcome == 'failure' && github.event.inputs.generate_logerror == 'true') }}
       uses: actions/upload-artifact@v4
       with:
         name: Upload error log
