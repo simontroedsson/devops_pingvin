@@ -64,11 +64,10 @@ jobs:
     
     - name: Log in to Docker Hub
       run: docker login -u $docker_username -p $docker_password
-    
+      
     - name: Build the Docker image
       run: docker build --build-arg API_KEY=$API_KEY -t $docker_username/demo:1.1 --file Dockerfile .
-    
-    
+      
     - name: Push image to dockerhub
       run: docker push $docker_username/demo:1.1
 
