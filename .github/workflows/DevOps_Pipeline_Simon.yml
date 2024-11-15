@@ -41,8 +41,9 @@ jobs:
     - name: Test with pytest
       id: test
       run: |
-       pytest > error_log.txt 
+       python -m pytest > error_log.txt 
        cat error_log.txt
+       exit 1
       continue-on-error: true
      
       
