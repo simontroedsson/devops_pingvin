@@ -43,6 +43,7 @@ jobs:
       run: |
        python -m pytest > error_log.txt 
        cat error_log.txt
+       exit 1
       continue-on-error: true
      
       
