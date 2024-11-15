@@ -54,7 +54,7 @@ jobs:
       with:
         name: Upload error log
         path: error_log.txt
-    
+  #w  
   build_and_deploy_image:
     if: ${{ github.event.inputs.run_test_job == 'false' }}
     runs-on: ubuntu-latest
