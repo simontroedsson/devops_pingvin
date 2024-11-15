@@ -66,10 +66,10 @@ jobs:
       run: docker login -u $docker_username -p $docker_password
       
     - name: Build the Docker image
-      run: docker build --build-arg API_KEY=$API_KEY -t $docker_username/demo:1.1 --file Dockerfile .
+      run: docker build --build-arg API_KEY=$API_KEY -t $docker_username/weather_app:latest --file Dockerfile .
       
     - name: Push image to dockerhub
-      run: docker push $docker_username/demo:1.1
+      run: docker push $docker_username/weather_app:latest
 
 
     
