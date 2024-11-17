@@ -24,7 +24,7 @@ env:
   docker_username: ${{secrets.DOCKER_simon_USERNAME}}
   docker_password: ${{secrets.DOCKER_simon_PASSWORD}}
   API_KEY: ${{secrets.API_KEY}}
-  version_number: ${{ github.event.inputs.version }}
+  version_number: ${{ github.event.inputs.version 
 
 jobs:
   test:
